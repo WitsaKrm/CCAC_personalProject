@@ -1,7 +1,7 @@
-const prisma = require("../config/prisma");
+const prisma = require('../config/prisma')
 
 exports.getUserById = (id) => {
-  return prisma.user.findFirst({
+  return prisma.users.findFirst({
     where: {
       id,
     },
@@ -9,20 +9,35 @@ exports.getUserById = (id) => {
 };
 
 exports.getUserByEmail = (email) => {
-  return prisma.user.findFirst({
+  return prisma.users.findFirst({
     where: {
       email,
     },
   });
 };
 
-exports.createUser = (email, password) => {
-  return prisma.user.create({
-    data: {
-      email,
-      password,
-    },
-  });
+exports.createUser = async (email, password, f_name, l_name, n_name, address, phone, gender, date_of_birth) => {
+  try {
+    const createdUser = await prisma.users.create({
+      data: {
+        email,
+        password,
+        f_name,
+        l_name,
+        n_name,
+        address,
+        phone,
+        gender,
+        date_of_birth,
+      },
+    });
+
+    return createdUser;
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    throw new Error("User creation failed");
+  }
 };
+
 
 

@@ -6,25 +6,25 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const body = req.body;
 
-    if (!email || !password) {
+    if (!body.email || !body.password) {
       return createError(400, "Email and password are required");
     }
 
-    if (typeof email !== "string" || typeof password !== "string") {
+    if (typeof body.email !== "string" || typeof body.password !== "string") {
       return createError(400, "Email or password is invalid");
     }
 
-    const isUserExist = await userService.getUserByEmail(email);
+    const isUserExist = await userService.getUserByEmail(body.email);
 
     if (isUserExist) {
       return createError(400, "User already exist");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(body.password, 10);
 
-    await userService.createUser(email, hashedPassword);
+    await userService.createUser(body.email, hashedPassword, body.f_name,body.l_name, body.n_name, body.address, body.phone, body.gender, body.date_of_birth);
 
     res.json({ message: "register success" });
   } catch (err) {
@@ -56,10 +56,10 @@ const login = async (req, res, next) => {
       return createError(400, "Email or password is invalid");
     }
 
-    const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+    const token = jwt.sign({ id: isUserExist.id }, process.env.SECRET_KEY_JWT, {
+      expiresIn: process.env.EXPIRES_IN_JWT,
     });
-    // console.log(token);
+    console.log(token);
     res.json({ token });
   } catch (err) {
     next(err);
