@@ -1,6 +1,6 @@
 const prisma = require("../config/prisma");
 
-const getUserById = (id) => {
+exports.getUserById = (id) => {
   return prisma.user.findFirst({
     where: {
       id,
@@ -8,7 +8,7 @@ const getUserById = (id) => {
   });
 };
 
-const getUserByEmail = (email) => {
+exports.getUserByEmail = (email) => {
   return prisma.user.findFirst({
     where: {
       email,
@@ -16,7 +16,7 @@ const getUserByEmail = (email) => {
   });
 };
 
-const createUser = (email, password) => {
+exports.createUser = (email, password) => {
   return prisma.user.create({
     data: {
       email,
@@ -25,8 +25,4 @@ const createUser = (email, password) => {
   });
 };
 
-module.exports = {
-  getUserByEmail,
-  getUserById,
-  createUser,
-};
+

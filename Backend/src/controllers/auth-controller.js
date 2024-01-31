@@ -1,7 +1,7 @@
 const createError = require("../utils/createError");
 const prisma = require("../config/prisma");
 const bcrypt = require("bcryptjs");
-const userService = require("../services/user-service");
+const userService = require("../services/user-serevice");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res, next) => {
@@ -59,7 +59,7 @@ const login = async (req, res, next) => {
     const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-
+    // console.log(token);
     res.json({ token });
   } catch (err) {
     next(err);
