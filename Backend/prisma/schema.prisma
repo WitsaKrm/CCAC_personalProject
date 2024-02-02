@@ -8,74 +8,103 @@ generator client {
 }
 
 enum Role {
-    VISITER
+    GUEST
     USER
     ADMIN
 }
 
+enum Gender {
+    MALE
+    FEMALE
+}
+
 model Users {
-    user_id       Int           @id @default(autoincrement())
+    id            Int           @id @default(autoincrement())
     f_name        String
     l_name        String
     n_name        String
     address       String
     phone         String
     email         String        @unique
-    createdAt     DateTime      @default(now())
-    username      String?
+    created_at    DateTime      @default(now())
+    username      String?       @unique
     password      String
     date_of_birth String
     gender        String
     role          Role          @default(USER)
     user_rentals  User_Rental[]
     bills         Bills[]
+    Payments      Payments[]
 }
 
 model Rooms {
-    room_id           Int            @id @default(autoincrement())
-    room_number       Int            @default(0)
-    price_per_month   Int            @default(0)
-    deposit           Int            @default(0)
-    status            String
-    img1              String
-    img2              String
-    img3              String
-    bills             Bills[]
-    lease_agrements     LeaseAgrement?
+    id              Int             @id @default(autoincrement())
+    room_number     String          @unique
+    price_per_month Int             @default(0)
+    deposit         Int             @default(0)
+    status          String
+    img1            String
+    img2            String
+    img3            String
+    bills           Bills[]
+    lease_agrements LeaseAgrement[]
+    Payments        Payments[]
+}
+
+enum PaymentStatus {
+    UNPAID
+    PAID
 }
 
 model Bills {
-    bill_id              Int    @id @default(autoincrement())
-    room_price           Int    @default(0)
-    water_unit_before    Int    @default(0)
-    water_unit_after     Int    @default(0)
-    electric_unit_before Int    @default(0)
-    electric_unit_after  Int    @default(0)
+    id                   Int           @id @default(autoincrement())
+    room_price           Int           @default(0)
+    water_unit_before    Int           @default(0)
+    water_unit_after     Int           @default(0)
+    electric_unit_before Int           @default(0)
+    electric_unit_after  Int           @default(0)
+    status               PaymentStatus @default(UNPAID)
     other                String
     total                String
-    user                 Users  @relation(fields: [user_id], references: [user_id],onDelete: Cascade,onUpdate: Cascade)
+    user                 Users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     user_id              Int
-    room                 Rooms  @relation(fields: [room_id], references: [room_id],onDelete: Cascade,onUpdate: Cascade)
+    room                 Rooms         @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     room_id              Int
+    Payments             Payments[]
 }
 
 model LeaseAgrement {
-    lease_id              Int          @id @default(autoincrement())
+    id                    Int          @id @default(autoincrement())
     create_at             DateTime     @default(now())
-    expired_at            DateTime     @updatedAt
+    expired_at            DateTime     @db.Date()
     lessor                String
     tenant_1              String
     tenant_2              String
     lease_agrement_number String
-    room                  Rooms        @relation(fields: [room_id], references: [room_id],onDelete: Cascade,onUpdate: Cascade)
-    room_id               Int          @unique
+    room                  Rooms        @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    room_id               Int
     user_rentals          User_Rental?
 }
 
 model User_Rental {
-    rental_id Int           @id @default(autoincrement())
-    user      Users         @relation(fields: [user_id], references: [user_id],onDelete: Cascade,onUpdate: Cascade)
-    user_id   Int
-    leases    LeaseAgrement @relation(fields: [lease_id], references: [lease_id],onDelete: Cascade,onUpdate: Cascade)
-    lease_id  Int           @unique
+    id       Int           @id @default(autoincrement())
+    user     Users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    user_id  Int
+    leases   LeaseAgrement @relation(fields: [lease_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    lease_id Int           @unique
+}
+
+model Payments {
+    id             Int           @id @default(autoincrement())
+    amount         Int
+    payment_date   DateTime      @default(now())
+    payment_method String?
+    pay_slip       String
+    status         PaymentStatus @default(UNPAID)
+    user           Users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    user_id        Int
+    bill           Bills         @relation(fields: [bill_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    bill_id        Int
+    room           Rooms         @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    room_id        Int
 }

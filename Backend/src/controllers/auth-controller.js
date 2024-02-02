@@ -24,7 +24,17 @@ const register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
-    await userService.createUser(body.email, hashedPassword, body.f_name,body.l_name, body.n_name, body.address, body.phone, body.gender, body.date_of_birth);
+    await userService.createUser(
+      body.email,
+      hashedPassword,
+      body.f_name,
+      body.l_name,
+      body.n_name,
+      body.address,
+      body.phone,
+      body.gender,
+      body.date_of_birth
+    );
 
     res.json({ message: "register success" });
   } catch (err) {
@@ -56,8 +66,8 @@ const login = async (req, res, next) => {
       return createError(400, "Email or password is invalid");
     }
 
-    const token = jwt.sign({ id: isUserExist.id }, process.env.SECRET_KEY_JWT, {
-      expiresIn: process.env.EXPIRES_IN_JWT,
+    const token = jwt.sign({ id: isUserExist.id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
     });
     console.log(token);
     res.json({ token });
