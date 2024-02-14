@@ -1,0 +1,81 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum Role {
+    VISITER
+    USER
+    ADMIN
+}
+
+model Users {
+    user_id       Int           @id @default(autoincrement())
+    f_name        String
+    l_name        String
+    n_name        String
+    address       String
+    phone         String
+    email         String        @unique
+    createdAt     DateTime      @default(now())
+    username      String?
+    password      String
+    date_of_birth String
+    gender        String
+    role          Role          @default(USER)
+    user_rentals  User_Rental[]
+    Bills         Bills[]
+}
+
+model Rooms {
+    room_id           Int            @id @default(autoincrement())
+    room_number       Int            @default(0)
+    price_per_month   Int            @default(0)
+    deposit           Int            @default(0)
+    status            String
+    img1              String
+    img2              String
+    img3              String
+    Bills             Bills[]
+    LeaseAgrement     LeaseAgrement?
+}
+
+model Bills {
+    bill_id              Int    @id @default(autoincrement())
+    room_price           Int    @default(0)
+    water_unit_before    Int    @default(0)
+    water_unit_after     Int    @default(0)
+    electric_unit_before Int    @default(0)
+    electric_unit_after  Int    @default(0)
+    other                String
+    total                String
+    user                 Users  @relation(fields: [user_id], references: [user_id],onDelete: Cascade,onUpdate: Cascade)
+    user_id              Int
+    room                 Rooms  @relation(fields: [room_id], references: [room_id],onDelete: Cascade,onUpdate: Cascade)
+    room_id              Int
+}
+
+model LeaseAgrement {
+    lease_id              Int          @id @default(autoincrement())
+    create_at             DateTime     @default(now())
+    expired_at            DateTime     @updatedAt
+    lessor                String
+    tenant_1              String
+    tenant_2              String
+    lease_agrement_number String
+    room                  Rooms        @relation(fields: [room_id], references: [room_id],onDelete: Cascade,onUpdate: Cascade)
+    room_id               Int          @unique
+    user_rentals          User_Rental?
+}
+
+model User_Rental {
+    rental_id Int           @id @default(autoincrement())
+    user      Users         @relation(fields: [user_id], references: [user_id],onDelete: Cascade,onUpdate: Cascade)
+    user_id   Int
+    leases    LeaseAgrement @relation(fields: [lease_id], references: [lease_id],onDelete: Cascade,onUpdate: Cascade)
+    lease_id  Int           @unique
+}

@@ -27,7 +27,7 @@ model Users {
     phone         String
     email         String        @unique
     created_at    DateTime      @default(now())
-    username      String?       @unique
+    username      String        @unique
     password      String
     date_of_birth String
     gender        String
@@ -48,12 +48,14 @@ model Rooms {
     img3            String
     bills           Bills[]
     lease_agrements LeaseAgrement[]
-    Payments        Payments[]
+    payments        Payments[]
+    promblems       Promblem[]
 }
 
 enum PaymentStatus {
     UNPAID
     PAID
+    CHECKING
 }
 
 model Bills {
@@ -74,16 +76,16 @@ model Bills {
 }
 
 model LeaseAgrement {
-    id                    Int          @id @default(autoincrement())
-    create_at             DateTime     @default(now())
-    expired_at            DateTime     @db.Date()
+    id                    Int           @id @default(autoincrement())
+    create_at             DateTime      @default(now())
+    expired_at            DateTime      @db.Date()
     lessor                String
     tenant_1              String
     tenant_2              String
     lease_agrement_number String
-    room                  Rooms        @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    room                  Rooms         @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     room_id               Int
-    user_rentals          User_Rental?
+    user_rentals          User_Rental[]
 }
 
 model User_Rental {
@@ -91,7 +93,7 @@ model User_Rental {
     user     Users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     user_id  Int
     leases   LeaseAgrement @relation(fields: [lease_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    lease_id Int           @unique
+    lease_id Int
 }
 
 model Payments {
@@ -107,4 +109,13 @@ model Payments {
     bill_id        Int
     room           Rooms         @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     room_id        Int
+}
+
+model Promblem {
+    id      Int    @id @default(autoincrement())
+    detail  String
+    detail2 String
+    detail3 String
+    room    Rooms  @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    room_id Int
 }
