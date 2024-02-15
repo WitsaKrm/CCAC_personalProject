@@ -74,7 +74,7 @@ export default function RegisterForm() {
           console.error("Response headers:", error.response.headers);
           Toast.fire({
             icon: "error",
-            title:`${error.response.data.error}`,
+            title: `${error.response.data.error}`,
           });
         }
       }
@@ -83,7 +83,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <Header />
+      <Header page={`register`}  links={[{label:'login', url:'/login'}]}/>
       <div className="relative flex flex-col min-h-screen overflow-hidden">
         <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
@@ -327,9 +327,15 @@ export default function RegisterForm() {
                   " "
                 ) : (
                   // setPasswordsMatch(true)
-                  <p className="mt-2 text-red-500 focus:border-red-400 focus:ring-red-300">
-                    Passwords do not match
-                  </p>
+                  <div
+                    class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert"
+                  >
+                    <span class="font-medium">Passwords do not match!</span>
+                  </div>
+                  // <p className="mt-2 text-red-500 focus:border-red-400 focus:ring-red-300">
+                  //   Passwords do not match
+                  // </p>
                 )}
               </>
             </section>

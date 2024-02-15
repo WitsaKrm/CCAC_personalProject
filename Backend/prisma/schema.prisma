@@ -8,7 +8,6 @@ generator client {
 }
 
 enum Role {
-    GUEST
     USER
     ADMIN
 }

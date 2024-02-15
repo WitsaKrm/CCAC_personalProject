@@ -75,7 +75,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <Header />
+      <Header page={`login`}  links={[{label:'', url:''}]}/>
       <div className="relative flex flex-col min-h-screen overflow-hidden">
         <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
