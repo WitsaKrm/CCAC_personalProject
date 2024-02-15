@@ -1,5 +1,5 @@
 const createError = require("../utils/createError");
-const prisma = require("../config/prisma");
+// const prisma = require("../config/prisma");
 const bcrypt = require("bcryptjs");
 const userService = require("../services/user-serevice");
 const jwt = require("jsonwebtoken");
@@ -26,13 +26,10 @@ const register = async (req, res, next) => {
       return createError(400, "Email/Username and Password is invalid");
     }
 
-    // Fetch user by email and username
     const isUserEmailExist = await userService.getUserByEmail(body.email);
     const isUserUsernameExist = await userService.getUserByUsername(
       body.username
     );
-
-    // Check if the user exists
     if (isUserEmailExist) {
       return createError(400, "This Email is already exist");
     } else if (isUserUsernameExist) {
@@ -84,7 +81,6 @@ const login = async (req, res, next) => {
     }
 
     const token = GenerateAuthToken({ id: isUserExist.id });
-    console.log(token, "98");
     res.json({ token: token, message: "Login successful" });
   } catch (err) {
     next(err, "123456");

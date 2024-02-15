@@ -47,7 +47,8 @@ export default function LoginForm() {
       console.log("Backend response:", response.data);
       const data = response.data;
       console.log(data.message);
-      if (data.message === "Login successful") {
+      if (data.message === "Login successful" && data.token) {
+        localStorage.setItem('token',JSON.stringify(data.token))
         console.log("Login successful");
         Toast.fire({
           icon: "success",

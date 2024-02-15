@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import endpoint from "../services/axios";
 import Header from "../components/header-component";
+import Swal from "sweetalert2";
 // import Alert from '@mui/material/Alert';
 
 export default function RegisterForm() {
@@ -19,7 +20,17 @@ export default function RegisterForm() {
     gender: "",
     role: "",
   });
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
   const handleChange = async (e) => {
     const { name, value } = e.target;
     console.log(name, ":", value);
@@ -47,6 +58,10 @@ export default function RegisterForm() {
       console.log("Backend response:", response.data);
       const data = response.data;
       if (data.message === "Registration successful") {
+        Toast.fire({
+          icon: "success",
+          title: `${data.message}`,
+        });
       }
     } catch (error) {
       console.error("Error registering user:", error);
@@ -57,6 +72,10 @@ export default function RegisterForm() {
           console.error("Response data:", error.response.data);
           console.error("Response status:", error.response.status);
           console.error("Response headers:", error.response.headers);
+          Toast.fire({
+            icon: "error",
+            title:`${error.response.data.error}`,
+          });
         }
       }
     }
