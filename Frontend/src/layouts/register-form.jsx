@@ -27,8 +27,6 @@ export default function RegisterForm() {
       ...prevData,
       [name]: value,
     }));
-
-    // Check if passwords match and update state
     if (prevData.password === value) {
       setPasswordsMatch(true);
     }
@@ -38,34 +36,23 @@ export default function RegisterForm() {
     e.preventDefault();
     // Check if passwords match
     if (formData.password !== formData.confirm_password) {
-      // Passwords don't match, handle accordingly (e.g., show an error message)
       console.log("Passwords do not match");
-
       setPasswordsMatch(false);
       return;
     }
     console.log("Form Data:", formData);
-    // Add your registration logic here
     try {
-      // Make a POST request to your backend endpoint
       const response = await endpoint.post("/auth/register", formData);
 
-      // Handle the response from the backend
       console.log("Backend response:", response.data);
       const data = response.data;
       if (data.message === "Registration successful") {
-        // <Alert severity="success">This is a success Alert.</Alert>
       }
-      // Add your additional logic here, such as redirecting the user or storing a token
     } catch (error) {
-      // Handle errors from the backend
       console.error("Error registering user:", error);
-
-      // Check if it's a network error
       if (error.isAxiosError && error.response === undefined) {
         console.error("Network error. Please check your internet connection.");
       } else {
-        // Log the response data if available
         if (error.response) {
           console.error("Response data:", error.response.data);
           console.error("Response status:", error.response.status);
@@ -79,7 +66,7 @@ export default function RegisterForm() {
     <>
       <Header />
       <div className="relative flex flex-col min-h-screen overflow-hidden">
-        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl">
+        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
             xXxXx Dormitory
           </h1>
@@ -335,7 +322,6 @@ export default function RegisterForm() {
                 Register
               </button>
             </div>
-
           </form>
         </div>
       </div>

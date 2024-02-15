@@ -1,54 +1,106 @@
 import React, { useState } from "react";
+import endpoint from "../services/axios";
+import Swal from "sweetalert2";
+
 import Header from "../components/header-component";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    console.log("Email changed:", newEmail);
-  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, ":", value);
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    console.log("Password changed:", newPassword);
+    switch (name) {
+      case "username":
+        setUsername(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      default:
+        break;
+    }
   };
-
-  const handleLogin = () => {
-    console.log("Email:", email);
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+  const handleLogin = async (e) => {
+    console.log("Username:", username);
     console.log("Password:", password);
+    e.preventDefault();
+
+    try {
+      const response = await endpoint.post("/auth/login", {
+        username,
+        password,
+      });
+      console.log("Backend response:", response.data);
+      const data = response.data;
+      console.log(data.message);
+      if (data.message === "Login successful") {
+        console.log("Login successful");
+        Toast.fire({
+          icon: "success",
+          title: data.message,
+        });
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      if (error.isAxiosError && error.response === undefined) {
+        console.error("Network error. Please check your internet connection.");
+      } else {
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          Toast.fire({
+            icon: "error",
+            title:`${error.response.data.error}`,
+          });
+        }
+      }
+    }
   };
+
   return (
     <>
       <Header />
       <div className="relative flex flex-col min-h-screen overflow-hidden">
-        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl">
+        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
-          xXxXx Dormitory
+            xXxXx Dormitory
           </h1>
           <p className="text-center mb-4">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis
-          consectetur animi placeat autem, voluptatibus odio illo iusto
-          deserunt? Deleniti, error.
-        </p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis
+            consectetur animi placeat autem, voluptatibus odio illo iusto
+            deserunt? Deleniti, error.
+          </p>
           <form className="mt-6">
             <div className="mb-2">
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-semibold text-gray-800"
               >
-                Email
+                Username
               </label>
               <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                autoComplete="current-email"
+                type="text"
+                value={username}
+                name="username"
+                onChange={handleChange}
+                autoComplete="current-username"
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                placeholder="Email or Username"
+                placeholder="Username or Username"
               />
             </div>
             <div className="mb-2">
@@ -61,7 +113,8 @@ export default function LoginForm() {
               <input
                 type="password"
                 value={password}
-                onChange={handlePasswordChange}
+                name="password"
+                onChange={handleChange}
                 autoComplete="current-password"
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Password"

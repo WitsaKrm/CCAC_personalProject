@@ -4,7 +4,7 @@ import RegisterForm from "./layouts/register-form";
 export default function App() {
   return (
     <>
-      {/* <LoginForm /> */}
+      <LoginForm />
       <RegisterForm />
     </>
   );
