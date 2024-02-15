@@ -62,40 +62,29 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     console.log(req.body);
-
-    // Check for missing fields
     if (!username || !password) {
       return createError(400, "Username and Password are required");
     }
 
-    // Validate input types
     if (typeof username !== "string" || typeof password !== "string") {
-      console.log("123");
       return createError(400, "Username or Password is invalid");
     }
 
-    // Fetch user by username
     const isUserExist = await userService.getUserByUsername(username);
-    console.log(isUserExist);
-    // Check if the user exists
     if (!isUserExist) {
       console.log("username");
       return createError(400, "Username or Password is invalid");
     }
-
-    // Function to check password match
     const isPasswordMatch = await bcrypt.compare(
       password,
       isUserExist.password
     );
-
-    // Check if password matches
     if (!isPasswordMatch) {
       return createError(400, "Username or password is invalid");
     }
 
     const token = GenerateAuthToken({ id: isUserExist.id });
-    console.log(token);
+    console.log(token, "98");
     res.json({ token: token, message: "Login successful" });
   } catch (err) {
     next(err, "123456");
