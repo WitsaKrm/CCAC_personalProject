@@ -6,7 +6,7 @@ import RegistrationComponent from "../components/registration-conponent";
 import MessageComponent from "../components/message-component";
 import TenantInfoComponent from "../components/tenantinfo-component";
 const ComponentToShow = ({ component: Component }) => (
-  <div className="bg-white p-4 mb-4 rounded shadow">
+  <div className="bg-gray-200 text-black p-4  rounded shadow">
     <Component />
   </div>
 );
@@ -55,7 +55,7 @@ export default function DashBoard() {
           ))}
         </ul>
       </div>
-      <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
+      <div className="container mx-auto p-4 bg-gray-100 min-h-full rounded-xl">
         {data.map(
           (itemName, idx) =>
             activeItem === itemName.name && (
