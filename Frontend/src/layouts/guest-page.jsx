@@ -8,7 +8,7 @@ export default function Guest() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await endpoint.get("/guest/rooms");
+        const response = await endpoint.get("/API/rooms");
         console.log(response.data);
         setRooms(response.data);
       } catch (error) {
@@ -33,11 +33,11 @@ export default function Guest() {
             {`rooms`.toUpperCase()}
           </h1>
 
-          <div className="flex flex-wrap gap-4 justify-center items-center mx-8 ">
+          <div className="flex w-100% flex-wrap gap-4 justify-center items-center mx-8 ">
             {rooms.map((room) => (
               <div
                 key={room.id}
-                className={`p-4 rounded-md shadow-md sm:w-1/3 md:w-1/4 lg:w-1/6 ${
+                className={`p-4 rounded-md shadow-md  ${
                   room.status === "available"
                     ? "bg-white hover:text-green-400 cursor-pointer"
                     : "bg-gray-200"
