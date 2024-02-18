@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 
 const authRoute = require("./routes/auth-route");
-const guestRoute = require("./routes/guest-route");
+const dataRoute = require("./routes/data-route");
 const notFound = require('./middlewares/notFound');
 const errorMiddleware = require('./middlewares/error');
 const env = process.env;
@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoute);
-app.use("/guest", guestRoute);
+app.use("/API", dataRoute);
 
 
 //not found
