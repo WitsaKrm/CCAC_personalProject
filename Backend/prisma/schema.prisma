@@ -36,12 +36,18 @@ model Users {
     Payments      Payments[]
 }
 
+enum RoomStatus {
+    AVALIABLE
+    UNAVALIABLE
+    ALREADY_RESERVED
+}
+
 model Rooms {
     id              Int             @id @default(autoincrement())
     room_number     String          @unique
     price_per_month Int             @default(0)
     deposit         Int             @default(0)
-    status          String
+    status          RoomStatus      @default(AVALIABLE)
     img1            String
     img2            String
     img3            String
