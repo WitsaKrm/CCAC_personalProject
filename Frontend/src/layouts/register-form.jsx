@@ -38,8 +38,10 @@ export default function RegisterForm() {
       ...prevData,
       [name]: value,
     }));
-    if (prevData.password === value) {
+    if (FormData.password === value) {
       setPasswordsMatch(true);
+    }else{
+      setPasswordsMatch(false);
     }
   };
 
@@ -50,6 +52,8 @@ export default function RegisterForm() {
       console.log("Passwords do not match");
       setPasswordsMatch(false);
       return;
+    }else{
+      setPasswordsMatch(true);
     }
     console.log("Form Data:", formData);
     try {
@@ -83,9 +87,9 @@ export default function RegisterForm() {
 
   return (
     <>
-      <Header page={`register`}  links={[{label:'login', url:'/login'}]}/>
+      <Header page={`register`} links={[{ label: "login", url: "/login" }]} />
       <div className="relative flex flex-col min-h-screen overflow-hidden">
-        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
+        <div className="max-w-md h-fit p-8 mx-auto my-8 bg-white rounded-md shadow-xl xl:max-w-xl 2xl:max-w-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
             xXxXx Dormitory
           </h1>
@@ -192,7 +196,7 @@ export default function RegisterForm() {
                     onChange={handleChange}
                     autoComplete="current-email"
                     className="block w-full px-4 py-2 mr-8 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                    placeholder="Email"
+                    placeholder="example@email.com"
                     required
                   />
                 </div>
@@ -277,7 +281,6 @@ export default function RegisterForm() {
                 />
               </div>
             </div>
-            {/* <div className="flex flex-row"></div> */}
             <div className="flex flex-col">
               <div className="mb-4">
                 <label
@@ -292,7 +295,7 @@ export default function RegisterForm() {
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="current-password"
-                  className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-2 mt-2 text-green-500 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Password"
                   required
                 />
@@ -311,10 +314,10 @@ export default function RegisterForm() {
                   onChange={handleChange}
                   autoComplete="confirm-password"
                   // className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  className={`block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                  className={`block w-full px-4 py-2 mt-2  bg-white border rounded-md  focus:outline-none focus:ring focus:ring-opacity-40 ${
                     formData.password !== formData.confirm_password
-                      ? "text-red-500  focus:border-red-400 focus:ring-red-300" // Add red border when passwords don't match
-                      : "" // Empty string for no additional styling
+                      ? "text-red-500  focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40" // Add red border when passwords don't match
+                      : "text-green-500  focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40" // Empty string for no additional styling
                   }`}
                   placeholder="Confirm Password"
                   required
@@ -324,18 +327,15 @@ export default function RegisterForm() {
             <section>
               <>
                 {passwordsMatch === true ? (
-                  " "
+                  <div></div>
                 ) : (
-                  // setPasswordsMatch(true)
+
                   <div
                     class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                     role="alert"
                   >
                     <span class="font-medium">Passwords do not match!</span>
                   </div>
-                  // <p className="mt-2 text-red-500 focus:border-red-400 focus:ring-red-300">
-                  //   Passwords do not match
-                  // </p>
                 )}
               </>
             </section>

@@ -48,7 +48,7 @@ export default function LoginForm() {
       const data = response.data;
       console.log(data.message);
       if (data.message === "Login successful" && data.token) {
-        localStorage.setItem('token',JSON.stringify(data.token))
+        localStorage.setItem("token", JSON.stringify(data.token));
         console.log("Login successful");
         Toast.fire({
           icon: "success",
@@ -66,7 +66,7 @@ export default function LoginForm() {
           console.error("Response headers:", error.response.headers);
           Toast.fire({
             icon: "error",
-            title:`${error.response.data.error}`,
+            title: `${error.response.data.error}`,
           });
         }
       }
@@ -75,16 +75,20 @@ export default function LoginForm() {
 
   return (
     <>
-      <Header page={`login`}  links={[{label:'', url:''}]}/>
-      <div className="relative flex flex-col min-h-screen overflow-hidden">
-        <div className="w-full h-fit p-8 mx-auto mt-8 bg-white rounded-md shadow-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
+      <Header page={`login`} links={[{ label: "", url: "" }]} />
+      <div className="mx-auto flex  justify-center min-h-screen">
+        <div className="max-w-md h-fit p-8 mx-auto my-8  bg-white rounded-md shadow-xl xl:max-w-xl lg:max-w-xl md:max-w-xl sm:max-w-sm">
           <h1 className="text-3xl font-semibold text-center text-green-700 uppercase">
             xXxXx Dormitory
           </h1>
           <p className="text-center mb-4">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis
-            consectetur animi placeat autem, voluptatibus odio illo iusto
-            deserunt? Deleniti, error.
+            Lorem ipsum dolor sit,Lorem ipsum dolor sit amet consectetur,
+            adipisicing elit. Aliquam molestias, dolorum mollitia excepturi
+            ipsam distinctio nobis magni ut explicabo dignissimos sit incidunt
+            alias laboriosam quasi consequatur doloribus quis illo aperiam
+            molestiae obcaecati? Architecto ratione hic eveniet, amet eum quasi.
+            Nobis quia possimus recusandae veritatis maxime. Expedita eveniet
+            quisquam ullam alias.
           </p>
           <form className="mt-6">
             <div className="mb-2">
@@ -101,7 +105,7 @@ export default function LoginForm() {
                 onChange={handleChange}
                 autoComplete="current-username"
                 className="block w-full px-4 py-2 mt-2 text-green-700 bg-white border rounded-md focus:border-green-400 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                placeholder="Username or Username"
+                placeholder="Username or Email"
               />
             </div>
             <div className="mb-2">
