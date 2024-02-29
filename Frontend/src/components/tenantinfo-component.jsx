@@ -185,7 +185,7 @@ export default function TenantInfoComponent() {
   ];
   return (
     <>
-      <div className=" font-bold">
+      <div className="text-2xl text-gray-500 font-bold mb-8">
         <p>Tenant Info Component</p>
       </div>
       <div className="overflow-x-auto my-2 bg-gray-200 rounded-md text-white">
