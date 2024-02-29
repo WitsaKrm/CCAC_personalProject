@@ -18,11 +18,11 @@ export default function Header({ links, page }) {
   ));
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 ">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">XXXX Dormitory</a>
       </div>
-      <div className="flex-none">
+      <div className="flex-none sx:hidden">
         {page === "guest" || page === "register" ? (
           <ul className="menu menu-horizontal px-1 mx-2">{navigationItems}</ul>
         ) : page === "login" ? (
