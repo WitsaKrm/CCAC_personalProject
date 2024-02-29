@@ -6,7 +6,7 @@ import RegistrationComponent from "../components/registration-conponent";
 import MessageComponent from "../components/message-component";
 import TenantInfoComponent from "../components/tenantinfo-component";
 const ComponentToShow = ({ component: Component }) => (
-  <div className="bg-gray-200 text-black p-4  rounded shadow">
+  <div className="bg-gray-100 text-black p-4  rounded shadow">
     <Component />
   </div>
 );
@@ -37,7 +37,8 @@ export default function DashBoard() {
           { label: "login", url: "/login" },
         ]}
       />
-      <div className="text-center mb-4">
+      <div className="min-h-full">
+      <div className="text-center mb-4 ">
         <ul className="menu menu-horizontal bg-gray-200 rounded-box text-black text-bold">
           {data.map((itemName, idx) => (
             <li key={idx}>
@@ -55,13 +56,14 @@ export default function DashBoard() {
           ))}
         </ul>
       </div>
-      <div className="container mx-auto p-4 bg-gray-100 min-h-full rounded-xl">
+      <div className="container mx-auto p-4 bg-white min-h-full rounded-xl ">
         {data.map(
           (itemName, idx) =>
             activeItem === itemName.name && (
               <ComponentToShow key={idx} component={itemName.component} />
             )
         )}
+      </div>
       </div>
     </>
   );
