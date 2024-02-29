@@ -8,13 +8,21 @@ generator client {
 }
 
 enum Role {
-    USER
-    ADMIN
+  USER
+  ADMIN
+  GUEST
 }
+
 
 enum Gender {
     MALE
     FEMALE
+}
+
+enum UserStatus {
+    USER
+    RESERVE
+    TENANT
 }
 
 model Users {
@@ -30,6 +38,7 @@ model Users {
     password      String
     date_of_birth String
     gender        String
+    status        UserStatus    @default(USER)
     role          Role          @default(USER)
     user_rentals  User_Rental[]
     bills         Bills[]
