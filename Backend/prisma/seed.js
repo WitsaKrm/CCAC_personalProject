@@ -17,6 +17,19 @@ const userData = [
     gender: "MALE",
     role: "ADMIN",
   },
+  {
+    f_name: "witsarut",
+    l_name: "sanongphun",
+    n_name: "KRM",
+    address: "165 หมู่4 ต.โพธิ์ทอง อ.เสลภูมิ จ.ร้อยเอ็ด 45120",
+    phone: "0962231700",
+    email: "witsarut.sx01@gmail.com",
+    username: "witsaKrm01",
+    password: pwd,
+    date_of_birth: "03/07/2000",
+    gender: "MALE",
+    role: "USER",
+  },
 ];
 
 const run = async () => {

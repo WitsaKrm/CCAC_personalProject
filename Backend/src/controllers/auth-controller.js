@@ -8,6 +8,7 @@ const GenerateAuthToken = require("../middlewares/generateAuthToken");
 const register = async (req, res, next) => {
   try {
     const body = req.body;
+    console.log(body.username);
     console.log(body.password);
 
     if (!body.email) {
