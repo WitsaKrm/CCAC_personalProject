@@ -39,15 +39,17 @@ export default function Guest() {
               <div
                 key={room.id}
                 className={`p-4 rounded-md shadow-md ${
-                  room.status === "available"
-                    ? "bg-white hover:text-green-400 cursor-pointer hover:bg-green-100"
-                    : "bg-gray-200 hover:bg-red-200" 
+                  room.status === "AVALIABLE"
+                    ? "bg-white hover:text-green-400 cursor-pointer hover:bg-green-100 hover:shadow-green-300"
+                    : room.status === "UNAVALIABLE"
+                    ? "bg-red-100 hover:bg-red-200 border hover:border-red-200  shadow-lg  hover:shadow-red-400"
+                    : " "
                 }`}
               >
                 <h2 className="text-xl text-gray-500 font-semibold mb-4">
                   {room.room_number}
                 </h2>
-                <p className='text-sm text-gray-700 truncate '>
+                <p className="text-sm text-gray-700 truncate ">
                   This is some content for room {room.room_number}. Lorem ipsum
                   dolor sit amet. Lorem ipsum dolor sit amet, consectetur
                   adipisicing elit. Quam, culpa?
